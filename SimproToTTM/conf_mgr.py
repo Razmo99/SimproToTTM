@@ -7,9 +7,9 @@ logger.debug('Importing Module : '+__name__)
 
 class conf_mgr(object):
 
-        def __init__(self,config_name='config.ini'):
+        def __init__(self,config_name=None):
                 self.config = configparser.ConfigParser()
-                self.conf_name=config_name
+                self.conf_name='config.ini' if config_name is None else config_name
                 
         def save_conf(self):
                 """Save the Current config of this class
