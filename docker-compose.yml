@@ -9,6 +9,6 @@ services:
       target: develop-stage
       dockerfile: ./dockerfile
     volumes:
-      - SimproToTTM:/app/storage
+      - storage:/app/storage
 volumes:
-  SimproToTTM: 
+  storage: 
