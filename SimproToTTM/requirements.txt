@@ -2,3 +2,6 @@ SimproAPI
 TelstraTrackMonitorAPI
 requests
 schedule
+pyinstaller==3.6.0
+patchelf-wrapper
+staticx
