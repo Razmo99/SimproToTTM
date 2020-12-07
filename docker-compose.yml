@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  main:
+    restart: always
+    env_file:
+      - ./.env
+    build:
+      context: .
+      target: develop-stage
+      dockerfile: ./dockerfile
+    volumes:
+      - SimproToTTM:/app/storage
+volumes:
+  SimproToTTM:      
