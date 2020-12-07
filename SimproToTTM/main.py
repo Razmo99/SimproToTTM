@@ -86,7 +86,7 @@ def main():
                     compare_data=SimproAPI.Trackables(simpro_token.server,simpro_token.access_token).compare_equipment(
                         company['id'], # id of the company
                         trackable_plant['id'], # id of the trackable plant
-                        trackable_plant['trackable_equipment'], # Plant equipment to match againts
+                        trackable_plant['trackable_plant'], # Plant equipment to match againts
                         ttm_devices, # List of ttm devices to match against
                         'serialNumber', #Serial Number field in ttm
                         ['serialNumber','lastLatitude','lastLongitude'], # other ttm fields to return when a match is found
