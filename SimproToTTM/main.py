@@ -114,11 +114,11 @@ def main():
                                 {'Value':map_url}
                             )
                             if simpro_patch_specific.ok:
-                                logger.info('Successfully Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id :'+str(simpro_equipment_update['plant_id'])+' custom_field_id:'+str(simpro_equipment_custom_field['id'])+'}')
+                                logger.info('Successfully Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
                             else:
-                                logger.info('Failed to Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id :'+str(simpro_equipment_update['plant_id'])+' custom_field_id:'+str(simpro_equipment_custom_field['id'])+'}')
+                                logger.info('Failed to Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
                         else:
-                            logger.info('Skipping; Location has not changed for: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id :'+str(simpro_equipment_update['plant_id'])+' custom_field_id:'+str(simpro_equipment_custom_field['id'])+'}')
+                            logger.info('Skipping; Location has not changed for: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
         else:
             logger.info('Did not find any equipment to patch in simpro')
     else:
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         logger.info('Synced in:'+str(end-start)+' Second(s)')
         logger.info('------------- Finished Session -------------')
 
-    run_every= os.getenv('SCHEDULE_RUN_EVERY_MINUTES',30)
+    run_every = os.getenv('SCHEDULE_RUN_EVERY_MINUTES',30)
     logger.info('Syncing every: '+run_every+' minutes')
     schedule.every(int(run_every)).minutes.do(job)
     while 1:
