@@ -7,10 +7,16 @@ import time
 import json
 import schedule
 from conf_mgr import conf_mgr
-import os, pathlib
+import os, pathlib, sys
 
-#Change the current working directory to be the parent of the main.py
-os.chdir(pathlib.Path(__file__).resolve().parent)
+if getattr(sys,'frozen',False):
+    #Change the current working directory to be the parent of the main.py
+    working_dir=pathlib.Path(sys._MEIPASS)
+    os.chdir(working_dir)
+else:
+    #Change the current working directory to be the parent of the main.py
+    working_dir=pathlib.Path(__file__).resolve().parent
+    os.chdir(working_dir)
 #Initialise logging
 logging_format='%(asctime)s - %(levelname)s - [%(module)s]::%(funcName)s() - %(message)s'
 log_name = os.getenv("LOG_SAVE_LOCATION",'simpro_to_ttm.log')
