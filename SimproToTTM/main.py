@@ -17,6 +17,10 @@ else:
     #Change the current working directory to be the parent of the main.py
     working_dir=pathlib.Path(__file__).resolve().parent
     os.chdir(working_dir)
+if os.getenv('DEBUG') == True:
+    LoggingLevel=logging.DEBUG
+else:
+    LoggingLevel=logging.INFO
 #Initialise logging
 logging_format='%(asctime)s - %(levelname)s - [%(module)s]::%(funcName)s() - %(message)s'
 log_name = os.getenv("LOG_SAVE_LOCATION",'simpro_to_ttm.log')
@@ -29,14 +33,16 @@ encoding='utf-8',
 delay=0
 )
 console=logging.StreamHandler()
-console.setLevel(logging.INFO)
+console.setLevel(LoggingLevel)
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=LoggingLevel,
     format=logging_format,
     handlers=[rfh,console]
 )
 
 logger = logging.getLogger(__name__)
+logger.info('Working dir is: '+str(working_dir))
+logger.info('Logging level is: '+str(LoggingLevel))
 
 def main():
     #Initialise Config
@@ -72,7 +78,8 @@ def main():
         with SimproAPI.Trackables(simpro_token.server,simpro_token.access_token) as trackables:
             simpro_trackable_companies=trackables.get_companies(
                 simpro_trackable_companies,
-                [conf.config['simpro_tracker']['serial'],conf.config['simpro_tracker']['last_known_location']]
+                [conf.config['simpro_tracker']['serial'],conf.config['simpro_tracker']['last_known_location']],
+                concurrently=True
             )
         #List containing all eligable ttm devices to match for.
         ttm_devices=[]
@@ -120,9 +127,9 @@ def main():
                                 {'Value':map_url}
                             )
                             if simpro_patch_specific.ok:
-                                logger.info('Successfully Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
+                                logger.info('Successfully patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
                             else:
-                                logger.info('Failed to Patched changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
+                                logger.info('Failed to patch changes: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
                         else:
                             logger.info('Skipping; Location has not changed for: {company_id: '+str(simpro_equipment_update['company_id'])+' plant_type_id: '+str(simpro_equipment_update['plant_type_id'])+' plant_id: '+str(simpro_equipment_update['plant_id'])+' custom_field_id: '+str(simpro_equipment_custom_field['id'])+'}')
         else:
@@ -158,6 +165,7 @@ if __name__ == "__main__":
     run_every = os.getenv('SCHEDULE_RUN_EVERY_MINUTES',30)
     logger.info('Syncing every: '+run_every+' minutes')
     schedule.every(int(run_every)).minutes.do(job)
+    #job()
     while 1:
         schedule.run_pending()
         time.sleep(1)
