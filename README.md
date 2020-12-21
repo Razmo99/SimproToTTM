@@ -30,8 +30,6 @@
 
 ## Docker environment variables
 ~~~
-
-SIMPRO_TARGET_COMPANIES #Companies to specify if any
 LOG_SAVE_LOCATION #dir to save logs to
 SCHEDULE_RUN_EVERY_MINUTES # x minutes to run sync
 SIMPRO_SERVER # URL of a Simpro Build
@@ -42,10 +40,10 @@ SIMPRO_PASSWORD # Pass for a Simpro Build
 SIMPRO_SERIAL # Custom field under a plant_type that is matched against the TTM serial
 SIMPRO_LAST_KNOWN_LOCATION # Custom field under a plant_type that is populated with TTM Lat & long data
 SIMPRO_SAVE_LOCATION # Dir to save temp token auth to
+SIMPRO_TARGET_COMPANIES # Companies to specify if any
 TTM_SERVER # URL of Telstra Track Monitor API gateway
 TTM_CLIENT_ID # API Client ID 
 TTM_CLIENT_SECRET # API Client Secret
 TTM_SAVE_LOCATION # Dir to save temp token auth to
 TZ # Timezone
-
 ~~~

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   main:
-    restart: On-failure
+    restart: on-failure:5
     env_file:
       - ./.env
     build:

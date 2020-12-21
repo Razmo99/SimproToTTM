@@ -18,7 +18,7 @@ else:
     #Change the current working directory to be the parent of the main.py
     working_dir=pathlib.Path(__file__).resolve().parent
     os.chdir(working_dir)
-if os.getenv('DEBUG') == True:
+if os.getenv('DEBUG') == 'True':
     LoggingLevel=logging.DEBUG
 else:
     LoggingLevel=logging.INFO
@@ -85,6 +85,7 @@ def main():
             simpro_companies=session.companies_get_all().json()
         #If "SIMPRO_TARGET_COMPANIES" are provided start matching
         if simpro_target_companies:
+            logger.info('"SIMPRO_TARGET_COMPANIES" specified, checking for matches in Simpro build')
             #Iterate over the retrieved tenant companies
             for simpro_company in simpro_companies:
                 #Iterate over each companies keys
@@ -94,9 +95,11 @@ def main():
                         # try to march the target to a known company in the simpro tenant, using lower case string match
                         # Doesn't append duplicate matches
                         if str(value).lower() == str(simpro_target_company).lower() and simpro_company['ID'] not in [i['ID'] for i in simpro_selected_companies]:
-                            simpro_selected_companies.append(simpro_company)
+                            logger.debug('Successfully found: {company_id:"'+str(simpro_company['ID'])+'", name "'+simpro_company['Name']+'"}')
+                            simpro_selected_companies.append(simpro_company['ID'])
         #Else Target all companies in the simpro tenant
         else:
+            logger.info('No "SIMPRO_TARGET_COMPANIES" Specified, all companies will checked for trackable "plant_types"')
             simpro_selected_companies=[i['ID'] for i in simpro_companies]
         
         #List containing information on companies that have trackable plants.
