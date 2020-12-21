@@ -48,7 +48,7 @@ class conf_mgr(object):
                 logger.debug('Created: '+self.conf_name)
 
         def check_docker(self):
-                docker_enviroment_variables=[
+                docker_environment_variables=[
                         {'env_var':'SIMPRO_SERVER','section':'simpro_auth','value':'server'},
                         {'env_var':'SIMPRO_CLIENT_ID','section':'simpro_auth','value':'client_id'},
                         {'env_var':'SIMPRO_CLIENT_SECRET','section':'simpro_auth','value':'client_secret'},
@@ -72,7 +72,7 @@ class conf_mgr(object):
                 else:
                         pass
 
-                for var in docker_enviroment_variables:
+                for var in docker_environment_variables:
                         if  not os.getenv(var['env_var'],'') == '':
                                 result=True
                                 logger.debug('Loaded env_var: '+var['env_var'])

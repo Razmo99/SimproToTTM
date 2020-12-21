@@ -1,7 +1,5 @@
 #Get the base images
 FROM python:3.9.0 AS develop-stage
-#Install and update dependancy for staticx
-RUN apt update && apt install patchelf
 #Set the working directory
 WORKDIR /app
 #Set some python env vars
@@ -24,6 +22,8 @@ FROM develop-stage as build-stage
 RUN mkdir tmp
 #Make a storage dir this is for logs etc
 RUN mkdir /app/storage
+#Install and update dependancy for staticx
+RUN apt update && apt install patchelf
 #Copy python dependencies from previous venv
 COPY --from=develop-stage /venv /venv
 #run pyinstaller to make a one-file bundled executable of the app

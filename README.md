@@ -15,7 +15,7 @@
 ## Requirements
  - Telstra Track Monitor
     - Trackers
-    - O2Auth Grant
+    - OAuth2 Grant
  - Simpro
     - O2Auth Grant
     - User Account
