@@ -5,7 +5,7 @@
  1. Connects to Simpro and enumerates all specified companies.
     1. Finds all trackable `plant_types` based on `SIMPRO_SERIAL` & `SIMPRO_LAST_KNOWN_LOCATION`
         1. _If a `plant_type` has both these fields its considered **trackable**_
-    1. _If no companies are specified it enumerates the whole tenant._
+    1. _If no `SIMPRO_TARGET_COMPANIES` are specified it enumerates the whole tenant._
  2. Connects to Telstra Track Monitor and retrieves all trackers with a friendly name.
  3. Iterates over each `plant` and tries to find a match in the ttm data. 
     1. If a match is found, it then appends that tracker with match info to a list.
@@ -27,6 +27,27 @@
 1. `docker-compose up --build`
    1. Don't add the `-d` flag so you can see if any errors occur on startup.\
    If it starts successfully then stop and start the container again in detached mode.
+
+## .env example
+~~~
+LOG_SAVE_LOCATION = simpro_to_ttm.log
+SCHEDULE_RUN_EVERY_MINUTES = 30
+SIMPRO_SERVER = 'https://mybuild.simprocloud.com'
+SIMPRO_CLIENT_ID = 'XXXXXXXXXXXXXXX'
+SIMPRO_CLIENT_SECRET = 'XXXXXXXXXXXXXXX'
+SIMPRO_USERNAME = 'XXXXXXXXXXXXXXX'
+SIMPRO_PASSWORD = 'XXXXXXXXXXXXXXX'
+SIMPRO_SERIAL = 'TTMSerial#'
+SIMPRO_LAST_KNOWN_LOCATION = 'LKL'
+SIMPRO_SAVE_LOCATION = 'simpro_token.json'
+SIMPRO_TARGET_COMPANIES = "['contoso - headoffice',1,2,3,'backoffice']"
+TTM_SERVER = 'https://tapi.telstra.com'
+TTM_CLIENT_ID = 'XXXXXXXXXXXXXXX'
+TTM_CLIENT_SECRET = 'XXXXXXXXXXXXXXX'
+TTM_SAVE_LOCATION = 'ttm_token.json'
+TZ = 'Australia/Sydney'
+DEBUG = False
+~~~
 
 ## Docker environment variables
 - SIMPRO_SERVER ***Required**
@@ -74,5 +95,7 @@
 - SCHEDULE_RUN_EVERY_MINUTES
    - How often to run a sync; in minute(s)
    - _default is 30_
+- DEBUG
+   - True or False
 ## Dockerfile
 Slightly modified version of the dockerfile layed out [here](https://www.kevin-messer.net/how-to-create-a-small-and-secure-container-for-your-python-applications/)
