@@ -1,5 +1,5 @@
 #Get the base images
-FROM python:3.9.0 AS develop-stage
+FROM python:3.10.4 AS develop-stage
 #Set the working directory
 WORKDIR /app
 #Set some python env vars

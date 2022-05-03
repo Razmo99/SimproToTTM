@@ -1,6 +1,8 @@
 urllib3>=1.25.10
 requests>=2.24.0
 schedule>=0.6.0
-pyinstaller==3.6.0
-patchelf-wrapper
-staticx
+pyinstaller>=3.6.0
+SimproAPI==0.1.08
+TelstraTrackMonitorAPI==0.1.08
+patchelf-wrapper>=1.2.0
+staticx>=0.13.6
